@@ -3,12 +3,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, ShoppingCart } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 // interface NavigationProps {
 //   onCartClick?: () => void
 // }
 
 export function Navigation() {
+  const{push}=useRouter();
   const [isOpen, setIsOpen] = useState(false)
 //   const { itemCount } = useCart()
 
@@ -49,6 +51,7 @@ export function Navigation() {
           </div>
 
           {/* Cart and Menu */}
+          <div className='flex gap-8 items-center'>
           <div className="flex items-center gap-3">
             {/* Cart Button */}
             <button
@@ -77,6 +80,13 @@ export function Navigation() {
               )}
             </button>
           </div>
+          <button
+              onClick={()=>{push('/login')}}
+              className="w-fit px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+            >
+              Get Started
+            </button>
+            </div>
         </div>
 
         {/* Mobile Navigation */}
