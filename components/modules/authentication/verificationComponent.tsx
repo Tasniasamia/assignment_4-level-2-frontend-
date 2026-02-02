@@ -1,13 +1,14 @@
 'use client'
+import { verifyEmail } from '@/actions/user.action';
 import { Loader2, Mail } from 'lucide-react';
 import React, { useState } from 'react';
 
 const VerificationComponent = ({token}:{token:string }) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleVerifyEmail = async () => {
-     
-      };
+    const handleVerifyEmail = () => {
+      return verifyEmail(token);
+    };
     return (
         <div>
         <div className="min-h-screen bg-linear-to-br from-background to-secondary/5 flex items-center justify-center px-4 py-8">

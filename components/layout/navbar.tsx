@@ -1,17 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { use, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { getUser } from '@/actions/user.action'
+import { userType } from '@/types'
 
 // interface NavigationProps {
 //   onCartClick?: () => void
 // }
 
-export function Navigation() {
+export function Navigation({user}:{user:userType}) {
+  console.log("user",user);
   const{push}=useRouter();
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
 //   const { itemCount } = useCart()
 
   const toggleMenu = () => {
@@ -68,6 +72,18 @@ export function Navigation() {
             </button>
 
             {/* Mobile Menu Button */}
+      
+          </div>
+             {user?.name ? (
+                <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
+                <span className="text-primary-foreground text-2xl font-bold">{user.name.split("")[0]}</span>
+              </div>
+             ):(  <button
+              onClick={()=>{push('/login')}}
+              className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+            >
+              Get Started
+            </button>)}
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
@@ -78,13 +94,6 @@ export function Navigation() {
               ) : (
                 <Menu className="w-6 h-6 text-foreground" />
               )}
-            </button>
-          </div>
-          <button
-              onClick={()=>{push('/login')}}
-              className="w-fit px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
-            >
-              Get Started
             </button>
             </div>
         </div>
@@ -103,6 +112,16 @@ export function Navigation() {
                   {item.label}
                 </Link>
               ))}
+               {/* {user?.name ? (
+                <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
+                <span className="text-primary-foreground text-2xl font-bold">{user.name.split("")[0]}</span>
+              </div>
+             ):(  <button
+              onClick={()=>{push('/login')}}
+              className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+            >
+              Get Started
+            </button>)} */}
             </div>
           </div>
         )}

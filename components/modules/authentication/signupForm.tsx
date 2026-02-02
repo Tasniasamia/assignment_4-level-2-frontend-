@@ -19,6 +19,11 @@ import { toast } from "sonner";
 import z from "zod";
 import { useForm } from "@tanstack/react-form";
 import { authClient } from "@/lib/auth_client";
+import { useState } from "react";
+import { postSignUp } from "@/actions/user.action";
+import { Role } from "@/types";
+import { roles } from "@/constants/role";
+import Link from "next/link";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const formSchema = z
@@ -64,12 +69,12 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       const toatId = toast.loading("Creating User");
       try {
         const { name, email, password } = value;
-        const res = await authClient.signUp.email({ name, email, password });
-        if (res?.data?.user) {
-          toast.success("User Registered Successfully", { id: toatId });
+        const {data,error}=await postSignUp({name:name,email:email,password:password,role:role});
+        if (data?.success) {
+          toast.success(`${data?.message}.please check your email`, { id: toatId });
           return;
         }
-        toast.error(res?.error?.message, { id: toatId });
+        toast.error(error?.error?.message, { id: toatId });
         return;
       } catch (err: any) {
         toast.error(err?.message, { id: toatId });
@@ -78,34 +83,49 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   });
 
 
-const handleSocialSign = async () => {
-    const toastId = toast.loading("Continuing with Google...");
+// const handleSocialSign = async () => {
+//     const toastId = toast.loading("Continuing with Google...");
   
-    try {
-      const res = await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "http://localhost:3000",
-      });
+//     try {
+//       const res = await authClient.signIn.social({
+//         provider: "google",
+//         callbackURL: "http://localhost:3000",
+//       });
   
-      if (res?.error) {
-        toast.error(res.error.message, { id: toastId });
-        return;
-      }
+//       if (res?.error) {
+//         toast.error(res.error.message, { id: toastId });
+//         return;
+//       }
   
-      toast.success("Welcome!", { id: toastId });
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong", { id: toastId });
-    }
-  };
+//       toast.success("Welcome!", { id: toastId });
+//     } catch (err: any) {
+//       toast.error(err?.message || "Something went wrong", { id: toastId });
+//     }
+//   };
   
-  
+const [role,setRole]=useState<Role>(roles.customer)
+
   return (
     <Card {...props}>
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
+         <CardHeader>
+      <CardTitle className="md:text-3xl text-xl text-center pt-3">Create an account</CardTitle>
+        <CardDescription className="text-center">
           Enter your information below to create your account
         </CardDescription>
+        <div className="flex justify-center pt-3">
+        <button
+              onClick={()=>{setRole(roles.customer)}}
+              className={`w-fit  px-4 py-2 rounded-lg   cursor-pointer ${role === 'customer'?'bg-primary text-primary-foreground':'bg-white text-primary border-primary'} h-12 text-base font-semibold`}
+            >
+              Customer
+            </button>      
+            <button
+              onClick={()=>{setRole(roles.provider)}}
+              className={`w-fit  px-4 py-2 rounded-lg  cursor-pointer ${role === 'provider'?'bg-primary text-primary-foreground':'bg-white text-primary border-primary'} h-12 text-base font-semibold`}
+            >
+              Provider
+            </button>         
+            </div>
       </CardHeader>
       <CardContent>
         <form
@@ -237,20 +257,20 @@ const handleSocialSign = async () => {
                 );
               }}
             />
-            <Button type="submit" form="signup-form">
+            <Button type="submit" form="signup-form" className="cursor-pointer">
               Create Account
             </Button>
             <FieldGroup>
               <Field>
-                <Button
+                {/* <Button
                   variant="outline"
                   type="button"
                   onClick={handleSocialSign}
                 >
                   Sign up with Google
-                </Button>
+                </Button> */}
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <a href="#">Sign in</a>
+                  Already have an account? <Link href="/login">Sign in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
