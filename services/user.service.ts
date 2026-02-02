@@ -1,5 +1,5 @@
 import { authUser} from "@/types";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export const userService={
   signup: async (
@@ -15,7 +15,7 @@ export const userService={
          body: JSON.stringify(postSignupData),
       });
       const res = await createSignup.json();
-      if (res?.success) {
+      if (res?.user) {
         return { data: res, error: null };
       }
       return { data: null, error: res };
@@ -23,31 +23,10 @@ export const userService={
       return { data: null, error: error };
     }
   },
-login:async(postLoginData:authUser)=>{
-try{
-  const createLogin = await fetch(`${process.env.BACKEND_URL}/api/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      
-    },
-    credentials: "include",
-    body: JSON.stringify(postLoginData),
-  });
-  const res = await createLogin.json();
-  if (res?.success) {
-    return { data: res, error: null };
-  }
-  return { data: null, error: res };
-}
-catch(error){
-  return {data:null,error}
-}
-  },
 
   getSession: async function () {
     try {
-      const cookieStore = await cookies(); // ❌ await নয়
+      const cookieStore = await cookies(); 
   
   
       const res = await fetch(
@@ -59,11 +38,17 @@ catch(error){
       );
   
       const data = await res.json();
+      console.log("session data",data);
       return { data, error: null };
   
     } catch (error) {
       return { data: null, error };
     }
+  },
+  
+  logOut:async function(){
+   const storeCookie=await cookies();
+   storeCookie.delete('better-auth.session_token');
+   return null
   }
-
 }

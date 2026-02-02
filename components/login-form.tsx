@@ -15,21 +15,20 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { signIn } from "@/lib/auth_client"
-import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { Role } from "@/types";
 import { roles } from "@/constants/role";
 import { toast } from "sonner";
-import { postLogin } from "@/actions/user.action";
+import { useRouter } from "next/navigation";
+
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [role,setRole]=useState<Role>(roles.customer)
-
+  const router=useRouter();
   const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -37,14 +36,28 @@ export function LoginForm({
     const password = formData.get("password") as string
     const toatId = toast.loading("Loging User");
     try {
-      const {data,error}=await postLogin({email:email,password:password,role:role});
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // ⭐ mandatory
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+    const data=await res.json();
       console.log("data",data);
-      console.log("error",error);
-      if (data?.success) {
-        toast.success(data?.message, { id: toatId });
+      if (data?.data?.user) {
+        toast.success("Login Successfully", { id: toatId });
+        router.refresh();
         return;
       }
-      toast.error(error?.error?.message, { id: toatId });
+      toast.error(data?.message, { id: toatId });
       return;
     } catch (err: any) {
       toast.error(err?.message, { id: toatId });

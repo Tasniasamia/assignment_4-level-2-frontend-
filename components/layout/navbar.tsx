@@ -4,8 +4,9 @@ import { use, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { getUser } from '@/actions/user.action'
+import { getUser, logOut} from '@/actions/user.action'
 import { userType } from '@/types'
+import { toast } from 'sonner'
 
 // interface NavigationProps {
 //   onCartClick?: () => void
@@ -13,9 +14,11 @@ import { userType } from '@/types'
 
 export function Navigation({user}:{user:userType}) {
   console.log("user",user);
-  const{push}=useRouter();
+  const route=useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
+  // const signOut=async()=>{
+  //  return await logout();
+  // }
 //   const { itemCount } = useCart()
 
   const toggleMenu = () => {
@@ -75,11 +78,19 @@ export function Navigation({user}:{user:userType}) {
       
           </div>
              {user?.name ? (
+              <div className="flex gap-3 items-center">
                 <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground text-2xl font-bold">{user.name.split("")[0]}</span>
               </div>
+              <button
+              onClick={async()=>{const res=await logOut();if(res===null){route.refresh();toast.message("Logout successfully")}}}
+              className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+            >
+              Logout
+            </button>
+            </div>
              ):(  <button
-              onClick={()=>{push('/login')}}
+              onClick={()=>{route.push('/login')}}
               className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
             >
               Get Started

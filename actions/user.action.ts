@@ -33,13 +33,19 @@ catch (error) {
    }
 }
 
-export const postLogin=async(postLoginData:authUser)=>{
-   try{
-      const {data,error} = await userService.login(postLoginData);
-      updateTag('user');
-      return { data: data, error:error };
-   }
-   catch(error){
-      return {data:null,error}
-   }
+export const logOut=async()=>{
+  const returnNull= await userService.logOut();
+  return returnNull;
+  
 }
+
+// export const postLogin=async(postLoginData:authUser)=>{
+//    try{
+//       const {data,error} = await userService.login(postLoginData);
+//       updateTag('user');
+//       return { data: data, error:error };
+//    }
+//    catch(error){
+//       return {data:null,error}
+//    }
+// }
