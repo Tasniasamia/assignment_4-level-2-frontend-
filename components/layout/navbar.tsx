@@ -1,36 +1,36 @@
-'use client'
+"use client";
 
-import { use, useState } from 'react'
-import Link from 'next/link'
-import { Menu, X, ShoppingCart } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { getUser, logOut} from '@/actions/user.action'
-import { userType } from '@/types'
-import { toast } from 'sonner'
+import { use, useState } from "react";
+import Link from "next/link";
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { getUser, logOut } from "@/actions/user.action";
+import { userType } from "@/types";
+import { toast } from "sonner";
 
 // interface NavigationProps {
 //   onCartClick?: () => void
 // }
 
-export function Navigation({user}:{user:userType}) {
-  console.log("user",user);
-  const route=useRouter();
+export function Navigation({ user }: { user: userType }) {
+  console.log("user", user);
+  const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   // const signOut=async()=>{
   //  return await logout();
   // }
-//   const { itemCount } = useCart()
+  //   const { itemCount } = useCart()
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Restaurants', href: '/restaurants' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-  ]
+    { label: "Home", href: "/" },
+    { label: "Restaurants", href: "/restaurants" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ];
 
   return (
     <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
@@ -41,7 +41,9 @@ export function Navigation({user}:{user:userType}) {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold">F</span>
             </div>
-            <span className="text-xl font-bold text-foreground hidden sm:inline">FoodHub</span>
+            <span className="text-xl font-bold text-foreground hidden sm:inline">
+              FoodHub
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -58,43 +60,55 @@ export function Navigation({user}:{user:userType}) {
           </div>
 
           {/* Cart and Menu */}
-          <div className='flex gap-8 items-center'>
-          <div className="flex items-center gap-3">
-            {/* Cart Button */}
-            <button
-            //   onClick={onCartClick}
-              className="relative p-2 rounded-lg hover:bg-muted transition-colors"
-            //   aria-label="Open cart"
-            >
-              <ShoppingCart className="w-6 h-6 text-foreground" />
-              {/* {itemCount > 0 && ( */}
+          <div className="flex gap-8 items-center">
+            <div className="flex items-center gap-3">
+              {/* Cart Button */}
+              <button
+                //   onClick={onCartClick}
+                className="relative p-2 rounded-lg hover:bg-muted transition-colors"
+                //   aria-label="Open cart"
+              >
+                <ShoppingCart className="w-6 h-6 text-foreground" />
+                {/* {itemCount > 0 && ( */}
                 <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {/* {itemCount} */}{1}
+                  {/* {itemCount} */}
+                  {1}
                 </span>
-              {/* )} */}
-            </button>
+                {/* )} */}
+              </button>
 
-            {/* Mobile Menu Button */}
-      
-          </div>
-             {user?.name ? (
+              {/* Mobile Menu Button */}
+            </div>
+            {user?.name ? (
               <div className="flex gap-3 items-center">
                 <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground text-2xl font-bold">{user.name.split("")[0]}</span>
+                  <span className="text-primary-foreground text-2xl font-bold">
+                    {user.name.split("")[0]}
+                  </span>
+                </div>
+                <button
+                  onClick={async () => {
+                    const res = await logOut();
+                    if (res === null) {
+                      route.refresh();
+                      toast.message("Logout successfully");
+                    }
+                  }}
+                  className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+                >
+                  Logout
+                </button>
               </div>
+            ) : (
               <button
-              onClick={async()=>{const res=await logOut();if(res===null){route.refresh();toast.message("Logout successfully")}}}
-              className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
-            >
-              Logout
-            </button>
-            </div>
-             ):(  <button
-              onClick={()=>{route.push('/login')}}
-              className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
-            >
-              Get Started
-            </button>)}
+                onClick={() => {
+                  route.push("/login");
+                }}
+                className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+              >
+                Get Started
+              </button>
+            )}
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
@@ -106,7 +120,7 @@ export function Navigation({user}:{user:userType}) {
                 <Menu className="w-6 h-6 text-foreground" />
               )}
             </button>
-            </div>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -123,7 +137,7 @@ export function Navigation({user}:{user:userType}) {
                   {item.label}
                 </Link>
               ))}
-               {/* {user?.name ? (
+              {/* {user?.name ? (
                 <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground text-2xl font-bold">{user.name.split("")[0]}</span>
               </div>
@@ -138,5 +152,5 @@ export function Navigation({user}:{user:userType}) {
         )}
       </div>
     </nav>
-  )
+  );
 }
