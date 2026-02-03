@@ -4,13 +4,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserProfileForm } from "../../common/userProfile";
 import { ProviderProfileForm } from "./providerProfile";
 import { userType } from "@/types";
+import { providerService } from "@/services/provider.service";
 
 
 
-export default function SettingTab({user}:{user:userType}) {
+export default async function SettingTab({user}:{user:userType}) {
 
   
-
+  const {data,error}=await providerService.getProvider({id:user?.id});
   return (
     <div>
 
@@ -28,7 +29,7 @@ export default function SettingTab({user}:{user:userType}) {
 
           <TabsContent value="provider" className="mt-6">
             <ProviderProfileForm
-              propData={user}
+              propData={data?.data}
             />
           </TabsContent>
         </Tabs>

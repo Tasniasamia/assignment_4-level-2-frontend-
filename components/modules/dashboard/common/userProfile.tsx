@@ -72,7 +72,7 @@ export function UserProfileForm({ initialData }: UserProfileFormProps) {
           setIsEditing(false);
           return;
         }
-        toast.success(error?.error?.message || error?.message, { id: toastId });
+        toast.error(error?.error?.message || error?.message, { id: toastId });
 
       } catch (err: any) {
         toast.error(err?.message || "Failed to update profile", {

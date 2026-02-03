@@ -28,8 +28,8 @@ export interface userType{
         openingTime: string,
         closingTime: string,
         isOpen: boolean,
-        createdAt: string,
-        updatedAt: string
+        createdAt: string | number | Date,
+        updatedAt: string | number | Date | undefined
     }
 }
 

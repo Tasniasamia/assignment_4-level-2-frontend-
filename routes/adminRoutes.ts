@@ -7,6 +7,10 @@ export const adminRoutes:route = {
       {
         name: "blog",
         url: "/admin/blog",
+      },
+      {
+        name:'Setting',
+        url:'/admin/setting'
       }
     ],
   }

@@ -20,7 +20,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
-import { userType } from "@/types";
+import { providerType, userType } from "@/types";
+import { updateProvider } from "@/actions/provider.action";
 
 // interface ProviderData {
 //   id: string;
@@ -37,14 +38,15 @@ import { userType } from "@/types";
 // }
 
 interface ProviderProfileFormProps {
-  propData?: userType;
+  propData?: providerType;
 }
 
 export function ProviderProfileForm({
   propData,
 
 }: ProviderProfileFormProps) {
-  const initialData=propData?.providerdata;
+  const initialData=propData;
+  console.log("initialData",initialData);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const providerSchema = z.object({
@@ -88,11 +90,33 @@ export function ProviderProfileForm({
       setIsLoading(true);
       const toastId = toast.loading("Updating restaurant profile...");
       try {
-   
-        toast.success("Restaurant profile updated successfully!", {
-          id: toastId,
-        });
-        setIsEditing(false);
+        const { restaurantName,
+          description,
+          phone,
+          address,
+          openingTime,
+          closingTime,
+          isOpen}=await value;
+        const payload = {
+          id: initialData?.id as string, // ensure id exists
+          restaurantName:restaurantName,
+          description:description,
+          phone:phone,
+          address:address,
+          openingTime:openingTime,
+          closingTime:closingTime,
+          isOpen:isOpen
+        };
+        const {data,error}=await updateProvider(payload);
+        if(data?.success){
+          toast.success(data?.message, {
+            id: toastId,
+          });
+          setIsEditing(false);
+          return;
+        }
+      
+        toast.error(error?.error?.message || error?.message, { id: toastId });
       } catch (err: any) {
         toast.error(err?.message || "Failed to update profile", {
           id: toastId,
@@ -159,7 +183,8 @@ export function ProviderProfileForm({
                 <div>
                   <span className="font-semibold text-sm">Last Updated:</span>
                   <p className="text-base">
-                    {new Date(initialData.updatedAt).toLocaleDateString()}
+                    
+                    {initialData?.updatedAt && new Date(initialData?.updatedAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>
