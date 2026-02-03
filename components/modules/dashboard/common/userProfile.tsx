@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
+import { BadgeCheck, CircleCheckBig } from "lucide-react";
 
 interface UserProfile {
   id: string;
@@ -108,7 +109,11 @@ export function UserProfileForm({
                   <p className="text-base">{initialData.name}</p>
                 </div>
                 <div>
+                  <div className="flex gap-2 items-center">
                   <span className="font-semibold text-sm">Email:</span>
+                  <BadgeCheck size={16} />   
+                                 </div>
+                
                   <p className="text-base">{initialData.email}</p>
                 </div>
                 <div>
@@ -172,6 +177,7 @@ export function UserProfileForm({
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
+                          disabled={true}
                           onChange={(e) =>
                             field.handleChange(e.target.value)
                           }

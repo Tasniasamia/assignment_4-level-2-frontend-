@@ -3,10 +3,10 @@ import SettingTab from '@/components/modules/dashboard/provider/setting/settingT
 const page = () => {
     return (
         <main className="min-h-screen bg-background">
-        <div className="container mx-auto py-8">
+   
           <h1 className="mb-8 text-4xl font-bold">Profile Management</h1>
           <SettingTab/>
-        </div>
+
         </main>
     );
 };

@@ -14,7 +14,7 @@ export const providerRoutes:route= {
       },
       {
         name: "Setting",
-        url: "/dashboard/setting",
+        url: "/provider/setting",
       },
     ],
   }

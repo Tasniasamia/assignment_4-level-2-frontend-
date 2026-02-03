@@ -1,25 +1,28 @@
 "use client";
-
-import { use, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getUser, logOut } from "@/actions/user.action";
+import { logOut } from "@/actions/user.action";
 import { userType } from "@/types";
 import { toast } from "sonner";
-
-// interface NavigationProps {
-//   onCartClick?: () => void
-// }
+import react from "react";
+import { roles } from "@/constants/role";
 
 export function Navigation({ user }: { user: userType }) {
   console.log("user", user);
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  // const signOut=async()=>{
-  //  return await logout();
-  // }
-  //   const { itemCount } = useCart()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -32,8 +35,17 @@ export function Navigation({ user }: { user: userType }) {
     { label: "Contact", href: "/contact" },
   ];
 
+  const menuItem =
+    user?.role === roles.admin
+      ? [{ name: "Dashboard", url: "/admin" }]
+      : user?.role === roles.customer
+      ? [{ name: "Dashboard", url: "/customer" }]
+      : user?.role === roles.provider
+      ? [{ name: "Dashboard", url: "/provider" }]
+      : [];
+
   return (
-    <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className="bg-background overflow-hidden border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -80,25 +92,27 @@ export function Navigation({ user }: { user: userType }) {
               {/* Mobile Menu Button */}
             </div>
             {user?.name ? (
-              <div className="flex gap-3 items-center">
-                <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
-                  <span className="text-primary-foreground text-2xl font-bold">
-                    {user.name.split("")[0]}
-                  </span>
+              <DropdownMenuShortcuts menuItem={menuItem}>
+                <div className="flex gap-3 items-center cursor-pointer">
+                  <div className="w-10 h-10 bg-gray-400  rounded-full flex items-center justify-center">
+                    <span className="text-primary-foreground text-2xl font-bold">
+                      {user.name.split("")[0]}
+                    </span>
+                  </div>
+                  {/* <button
+                    onClick={async () => {
+                      const res = await logOut();
+                      if (res === null) {
+                        route.refresh();
+                        toast.message("Logout successfully");
+                      }
+                    }}
+                    className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
+                  >
+                    Logout
+                  </button> */}
                 </div>
-                <button
-                  onClick={async () => {
-                    const res = await logOut();
-                    if (res === null) {
-                      route.refresh();
-                      toast.message("Logout successfully");
-                    }
-                  }}
-                  className="w-fit  px-4 py-2 rounded-lg  cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold"
-                >
-                  Logout
-                </button>
-              </div>
+              </DropdownMenuShortcuts>
             ) : (
               <button
                 onClick={() => {
@@ -152,5 +166,49 @@ export function Navigation({ user }: { user: userType }) {
         )}
       </div>
     </nav>
+  );
+}
+
+export function DropdownMenuShortcuts({
+  children,
+  menuItem,
+}: {
+  children: react.ReactNode;
+  menuItem: { name: string; url: string }[];
+}) {
+  const route = useRouter();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="font-semibold">
+            My Account
+          </DropdownMenuLabel>
+
+          {menuItem?.map((i, index) => {
+            return (
+              <DropdownMenuItem key={index}>
+                <Link href={i?.url}>{i?.name}</Link>
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={async () => {
+            const res = await logOut();
+            if (res === null) {
+              route.refresh();
+              toast.message("Logout successfully");
+            }
+          }}
+        >
+          Log out
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
