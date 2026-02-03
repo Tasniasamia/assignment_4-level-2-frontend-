@@ -29,12 +29,65 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [role,setRole]=useState<Role>(roles.customer)
   const router=useRouter();
-  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
-    const toatId = toast.loading("Loging User");
+  // const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
+  //   const formData = new FormData(e.currentTarget)
+  //   const email = formData.get("email") as string
+  //   const password = formData.get("password") as string
+  //   const toatId = toast.loading("Loging User");
+  //   try {
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         credentials: "include", // ⭐ mandatory
+  //         body: JSON.stringify({
+  //           email,
+  //           password,
+  //         }),
+  //       }
+  //     );
+  //   const data=await res.json();
+  //     console.log("data",data);
+  //     if (data?.data?.user) {
+  //       switch (data?.data?.user){
+  //         case roles.admin:
+  //         router.push('/admin');
+  //         toast.success("Login Successfully", { id: toatId });
+  //         router.refresh();
+  //         break;
+  //         case roles.customer:
+  //         router.push('/customer');
+  //         toast.success("Login Successfully", { id: toatId });
+  //         router.refresh();
+  //         break;
+  //         case roles.provider:
+  //         router.push('/provider');
+  //         toast.success("Login Successfully", { id: toatId });
+  //         router.refresh();
+  //         break;
+  //       }
+  //       return;
+       
+  //     }
+  //     toast.error(data?.message, { id: toatId });
+  //     return;
+  //   } catch (err: any) {
+  //     toast.error(err?.message, { id: toatId });
+  //   }
+  // }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+  
+    const toastId = toast.loading("Logging user...");
+  
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
@@ -43,26 +96,42 @@ export function LoginForm({
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // ⭐ mandatory
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+          credentials: "include", // ⭐ mandatory for cookie
+          body: JSON.stringify({ email, password }),
         }
       );
-    const data=await res.json();
-      console.log("data",data);
-      if (data?.data?.user) {
-        toast.success("Login Successfully", { id: toatId });
-        router.refresh();
+  
+      const data = await res.json();
+      console.log("data", data);
+  
+      const user = data?.data;
+  
+      if (!res.ok || !user) {
+        toast.error(data?.message || "Login failed", { id: toastId });
         return;
       }
-      toast.error(data?.message, { id: toatId });
-      return;
+
+      toast.success("Login successfully", { id: toastId });
+  
+      switch (user.role) {
+        case 'admin':
+        window.location.href="/admin";
+        break;
+        case 'customer':
+        window.location.href="/customer";
+        break;
+        case 'provider':
+        window.location.href="/provider";
+        break;
+        default:
+        router.push("/");
+      }
+  
     } catch (err: any) {
-      toast.error(err?.message, { id: toatId });
+      toast.error(err?.message || "Something went wrong", { id: toastId });
     }
-  }
+  };
+  
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
