@@ -31,7 +31,7 @@ export function PaginationCustom({ meta }: { meta: metaType }) {
   const { limit: pageSize, page: currentPage, total, totalPages } = meta;
 
   const [value, setValue] = useState<string | number>(pageSize.toString());
-  console.log("meta", meta);
+ 
   const searchParams = useSearchParams();
   const naviateToPage = (page: number,limit:number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -46,7 +46,6 @@ export function PaginationCustom({ meta }: { meta: metaType }) {
         <Select
           defaultValue={pageSize.toString()}
           onValueChange={(value) => {
-            console.log("select value", value);
             setValue(value);
             naviateToPage(currentPage,Number(value));
           }}
@@ -72,7 +71,6 @@ export function PaginationCustom({ meta }: { meta: metaType }) {
               className="cursor-pointer"
               onClick={() => {
                 let page = Number(currentPage);
-                console.log(page);
                 naviateToPage((page = page - 1),Number(value));
               }}
               disabled={currentPage == 1}

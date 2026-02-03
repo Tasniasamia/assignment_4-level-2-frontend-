@@ -101,9 +101,7 @@ getUserByAdmin: async function (queries?: Partial<QueryOptions>,) {
 
 updateStatus:async function({id}:{id:string}){
   try {
-    console.log("id",id)
     const cookieStore = await cookies();
-
     const res = await fetch(
      `${process.env.BACKEND_URL}/api/user/update-status`,
      {

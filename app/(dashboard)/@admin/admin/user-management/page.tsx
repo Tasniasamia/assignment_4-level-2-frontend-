@@ -11,8 +11,6 @@ const page = async({
  const {page,limit}=await searchParams;
 const pageInt=Number(page);
 const limitInt=Number(limit);
-// console.log("page",pageInt);
-// console.log("limit",limit);
     const {data,error}=await userService.getUserByAdmin({page:pageInt,limit:limitInt});
  
     return (

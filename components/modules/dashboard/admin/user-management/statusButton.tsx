@@ -12,8 +12,6 @@ type StatusButtonProps = {
 const StatusButton = ({ userData }: StatusButtonProps) => {
   const handleStatus = async () => {
     const { data, error } = await updateStatus({ id: userData.id });
-    console.log('data',data);
-    console.log('error',error);
     if (data?.success) {
       toast.success(data.message || "Status updated successfully");
       return;

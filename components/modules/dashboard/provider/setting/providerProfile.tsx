@@ -46,7 +46,6 @@ export function ProviderProfileForm({
 
 }: ProviderProfileFormProps) {
   const initialData=propData;
-  console.log("initialData",initialData);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const providerSchema = z.object({
