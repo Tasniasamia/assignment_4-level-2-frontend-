@@ -65,8 +65,7 @@ export function UserProfileForm({ initialData }: UserProfileFormProps) {
           name: name,
           image: image as string,
         });
-        console.log("data",data);
-        console.log("error",error);
+      
         if(data?.success){
           toast.success(data?.message, { id: toastId });
           setIsEditing(false);

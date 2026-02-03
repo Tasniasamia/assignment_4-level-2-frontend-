@@ -106,7 +106,7 @@ export function LoginForm({
       const user = data?.data;
   
       if (!res.ok || !user) {
-        toast.error(data?.message || "Login failed", { id: toastId });
+        toast.error(data?.error?.message || data?.message || "Login failed", { id: toastId });
         return;
       }
 

@@ -5,8 +5,8 @@ export const adminRoutes:route = {
    
     documents: [
       {
-        name: "blog",
-        url: "/admin/blog",
+        name: "User Management",
+        url: "/admin/user-management",
       },
       {
         name:'Setting',
