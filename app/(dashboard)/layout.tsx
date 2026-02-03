@@ -23,7 +23,6 @@ export default async function Page({admin,customer,provider}:{admin:React.ReactN
 
     const {data,error}=await userService.getSession();
     const role = data?.data?.role;
-    console.log("userRole from dashboard",data?.data);
     type UserRole = {
       role: Role;
     };

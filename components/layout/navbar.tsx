@@ -20,7 +20,6 @@ import react from "react";
 import { roles } from "@/constants/role";
 
 export function Navigation({ user }: { user: userType }) {
-  console.log("user", user);
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 

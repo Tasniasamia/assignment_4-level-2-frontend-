@@ -18,4 +18,34 @@ export interface userType{
     status: userStatus,
     createdAt: string,
     updatedAt: string,
+    providerdata?: {
+        id: string,
+        userId: string,
+        restaurantName: string,
+        description: string,
+        phone: string,
+        address: string,
+        openingTime: string,
+        closingTime: string,
+        isOpen: boolean,
+        createdAt: string,
+        updatedAt: string
+    }
+}
+
+// {
+   
+// }
+
+
+
+
+
+
+
+
+export interface TEditUser{
+    id:string,
+    name?:string,
+    image?:string
 }

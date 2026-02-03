@@ -102,7 +102,6 @@ export function LoginForm({
       );
   
       const data = await res.json();
-      console.log("data", data);
   
       const user = data?.data;
   

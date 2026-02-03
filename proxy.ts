@@ -10,7 +10,6 @@ export const proxy=async(request:NextRequest)=>{
    let isAuthenticate=false;
    let isAdmin=false;
    let path=request.nextUrl.pathname;
-   console.log(path);
    if(user){
     isAuthenticate=true;
     isAdmin=user?.role===roles.admin;

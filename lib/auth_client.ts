@@ -15,7 +15,6 @@ export const signIn = async () => {
           });
     }
     catch(err){
-        // console.log(err)
     }
  
 };

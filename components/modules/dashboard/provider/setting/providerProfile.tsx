@@ -20,33 +20,33 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
+import { userType } from "@/types";
 
-interface ProviderData {
-  id: string;
-  userId: string;
-  restaurantName: string;
-  description: string;
-  phone: string;
-  address: string;
-  openingTime: string;
-  closingTime: string;
-  isOpen: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+// interface ProviderData {
+//   id: string;
+//   userId: string;
+//   restaurantName: string;
+//   description: string;
+//   phone: string;
+//   address: string;
+//   openingTime: string;
+//   closingTime: string;
+//   isOpen: boolean;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 interface ProviderProfileFormProps {
-  initialData?: ProviderData;
-  onSubmit?: (data: Partial<ProviderData>) => Promise<void>;
+  propData?: userType;
 }
 
 export function ProviderProfileForm({
-  initialData,
-  onSubmit,
+  propData,
+
 }: ProviderProfileFormProps) {
+  const initialData=propData?.providerdata;
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const providerSchema = z.object({
     restaurantName: z
       .string()
@@ -88,17 +88,7 @@ export function ProviderProfileForm({
       setIsLoading(true);
       const toastId = toast.loading("Updating restaurant profile...");
       try {
-        if (onSubmit) {
-          await onSubmit({
-            restaurantName: value.restaurantName,
-            description: value.description,
-            phone: value.phone,
-            address: value.address,
-            openingTime: value.openingTime,
-            closingTime: value.closingTime,
-            isOpen: value.isOpen,
-          });
-        }
+   
         toast.success("Restaurant profile updated successfully!", {
           id: toastId,
         });

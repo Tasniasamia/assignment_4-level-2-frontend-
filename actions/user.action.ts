@@ -1,6 +1,6 @@
 'use server'
 import { userService } from "@/services/user.service";
-import { authUser} from "@/types";
+import { authUser, TEditUser} from "@/types";
 import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -38,6 +38,13 @@ export const logOut=async()=>{
   return returnNull;
   
 }
+
+export const updateProfile=async(userData:TEditUser)=>{
+   const {data,error}=await userService.updateProfile(userData);
+   updateTag('user');
+   return {data:data,error:error}
+}
+
 
 // export const postLogin=async(postLoginData:authUser)=>{
 //    try{

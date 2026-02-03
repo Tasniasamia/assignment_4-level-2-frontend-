@@ -70,7 +70,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       try {
         const { name, email, password } = value;
         const {data,error}=await postSignUp({name:name,email:email,password:password,role:role});
-        console.log("data",data)
         if (data?.user) {
           toast.success(`please check your email`, { id: toatId });
           return;

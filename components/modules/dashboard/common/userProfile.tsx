@@ -21,34 +21,20 @@ import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { BadgeCheck, CircleCheckBig } from "lucide-react";
-
-interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  image: string | null;
-  role: "customer" | "provider";
-  status: "activate" | "inactive";
-  createdAt: string;
-  updatedAt: string;
-}
+import { updateProfile } from "@/actions/user.action";
+import { userType } from "@/types";
 
 interface UserProfileFormProps {
-  initialData?: UserProfile;
-  onSubmit?: (data: Partial<UserProfile>) => Promise<void>;
+  initialData?: userType;
 }
 
-export function UserProfileForm({
-  initialData,
-  onSubmit,
-}: UserProfileFormProps) {
+export function UserProfileForm({ initialData }: UserProfileFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const userSchema = z.object({
-    name: z
-      .string(),
-     
+    name: z.string(),
+
     email: z.string(),
     image: z.string(),
   });
@@ -66,15 +52,28 @@ export function UserProfileForm({
       setIsLoading(true);
       const toastId = toast.loading("Updating profile...");
       try {
-        if (onSubmit) {
-          await onSubmit({
-            name: value.name,
-            email: value.email,
-            image: value.image,
-          });
+        // if (onSubmit) {
+        //   await onSubmit({
+        //     name: value.name,
+        //     email: value.email,
+        //     image: value.image,
+        //   });
+        // }
+        const { name, email, image } = value;
+        const { data, error } = await updateProfile({
+          id: initialData?.id as string,
+          name: name,
+          image: image as string,
+        });
+        console.log("data",data);
+        console.log("error",error);
+        if(data?.success){
+          toast.success(data?.message, { id: toastId });
+          setIsEditing(false);
+          return;
         }
-        toast.success("Profile updated successfully!", { id: toastId });
-        setIsEditing(false);
+        toast.success(error?.error?.message || error?.message, { id: toastId });
+
       } catch (err: any) {
         toast.error(err?.message || "Failed to update profile", {
           id: toastId,
@@ -110,10 +109,10 @@ export function UserProfileForm({
                 </div>
                 <div>
                   <div className="flex gap-2 items-center">
-                  <span className="font-semibold text-sm">Email:</span>
-                  <BadgeCheck size={16} />   
-                                 </div>
-                
+                    <span className="font-semibold text-sm">Email:</span>
+                    <BadgeCheck size={16} />
+                  </div>
+
                   <p className="text-base">{initialData.email}</p>
                 </div>
                 <div>
@@ -149,9 +148,7 @@ export function UserProfileForm({
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
-                          onChange={(e) =>
-                            field.handleChange(e.target.value)
-                          }
+                          onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
                           placeholder="John Doe"
                           required
@@ -178,9 +175,7 @@ export function UserProfileForm({
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           disabled={true}
-                          onChange={(e) =>
-                            field.handleChange(e.target.value)
-                          }
+                          onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
                           placeholder="m@example.com"
                           required
