@@ -2,23 +2,51 @@
 
 import Image from 'next/image'
 import { ShoppingCart, Star } from 'lucide-react'
-import { mealTableType } from '@/types'
+import { mealTableType, userType } from '@/types'
+import { roles } from '@/constants/role'
+import { toast } from 'sonner'
+import { addCart } from '@/actions/cart.action'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 interface mealType{
-  mealData:mealTableType
+  mealData:mealTableType,
+  userData?:userType
 }
 
-export function MealCard({mealData}:mealType ) {
+export function MealCard({mealData,userData}:mealType ) {
 //   const { addToCart } = useCart()
+const {push}=useRouter();
 
-  const handleAddToCart = () => {
-    // addToCart({
-    //   id,
-    //   name,
-    //   price,
-    //   image,
-    //   restaurant,
-    // })
+  const handleAddToCart =async () => {
+    const toatId = toast.loading("adding item tnto cart");
+
+  try{
+
+     if(userData?.role !== roles.customer){
+      toast.error('You have to be customer',{id:toatId});
+      return;
+     }
+     const { data, error } = await addCart({
+      userId: userData?.id,
+      mealId: mealData?.id,
+      quantity: 1,
+    });
+    if (data?.success) {
+      toast.success(data.message || "Add Item into Cart",{ id: toatId });
+      push('/customer/checkout');
+      return;
+    }
+
+    toast.error(
+      error?.error?.message || error?.message || "Add item into cart get failed",{ id: toatId }
+    );
+    return;
+     
+  }
+  catch(error:any){
+   toast.error(error?.message,{ id: toatId })
+  }
   }
 
   return (
@@ -50,12 +78,12 @@ export function MealCard({mealData}:mealType ) {
             <p className="text-lg font-bold text-primary">${mealData?.price.toFixed(2)}</p>
             <p className="text-xs text-muted-foreground">{mealData?.rating} reviews</p>
           </div>
-          <button
+          <Button
             onClick={handleAddToCart}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-lg transition-colors duration-200"
+            className="bg-primary cursor-pointer hover:bg-primary/90 text-primary-foreground p-2 rounded-lg transition-colors duration-200"
           >
             <ShoppingCart size={20} />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { getAllCategory } from "@/actions/category.action";
 import { getAllMeal, getMealByProvider } from "@/actions/meal.action";
+import { getUser } from "@/actions/user.action";
 import { MealCard } from "@/components/common/card/mealcard";
 import { SearchBar } from "@/components/common/search/searchbar";
 import Banner from "@/components/layout/banner";
@@ -35,6 +36,7 @@ const page = async ({
   });
 
   const { data: categoryData, error: categoryError } = await getAllCategory();
+  const {data:userData,error:userError}=await getUser();
   console.log("data", data);
   return (
     <div>
@@ -47,7 +49,7 @@ const page = async ({
         <h2 className="text-3xl font-bold text-foreground mb-8">Popular Meals</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data?.data?.map((meal:mealTableType) => (
-            <MealCard key={meal.id} mealData={meal} />
+            <MealCard key={meal.id} mealData={meal} userData={userData?.data}/>
           ))}
         </div>
       </section>
