@@ -5,4 +5,6 @@ export * from './route.type';
 export * from './provider.type';
 export * from './user.query.type';
 export * from './meal.type';
-export * from './order.type'
+export * from './order.type';
+export * from './orderStatus.type';
+export * from './order.query';

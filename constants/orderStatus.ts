@@ -1,0 +1,8 @@
+export const orderStatus={
+    PLACED:'PLACED',
+    PREPARING:'PREPARING',
+    READY:'READY',
+    DELIVERED:'DELIVERED',
+    CANCELLED:'CANCELLED',
+} 
+
