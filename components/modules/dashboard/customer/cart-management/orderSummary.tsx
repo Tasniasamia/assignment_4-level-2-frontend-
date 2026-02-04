@@ -5,21 +5,15 @@ import { Card } from '@/components/ui/card';
 
 interface OrderSummaryProps {
   subtotal: number;
-  taxRate?: number;
-  deliveryFee?: number;
-  onCheckout: () => void;
-  isLoading?: boolean;
+ 
 }
 
 export default function OrderSummary({
-  subtotal,
-  taxRate = 0.1,
-  deliveryFee = 2.99,
-  onCheckout,
-  isLoading = false,
+  subtotal
+
 }: OrderSummaryProps) {
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax + deliveryFee;
+  
+  const total = subtotal;
 
   return (
     <Card className="p-6 sticky top-6 h-fit border-border bg-card">
@@ -38,7 +32,7 @@ export default function OrderSummary({
         <div className="flex justify-between items-center text-sm">
           <span className="text-muted-foreground">Tax (10%)</span>
           <span className="text-foreground font-medium">
-            ${tax.toFixed(2)}
+            $0
           </span>
         </div>
 
@@ -46,7 +40,7 @@ export default function OrderSummary({
         <div className="flex justify-between items-center text-sm">
           <span className="text-muted-foreground">Delivery Fee</span>
           <span className="text-foreground font-medium">
-            ${deliveryFee.toFixed(2)}
+            $0
           </span>
         </div>
 
@@ -63,11 +57,10 @@ export default function OrderSummary({
       </div>
 
       <Button
-        onClick={onCheckout}
-        disabled={isLoading || subtotal === 0}
-        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-12"
+    
+        className="w-full bg-accent text-white hover:bg-accent/90 cursor-pointer font-semibold h-12"
       >
-        {isLoading ? 'Processing...' : 'Proceed to Checkout'}
+        Place Order
       </Button>
 
       <p className="text-xs text-muted-foreground text-center mt-4">

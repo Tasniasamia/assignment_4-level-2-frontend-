@@ -18,10 +18,19 @@ import { userType } from "@/types";
 import { toast } from "sonner";
 import react from "react";
 import { roles } from "@/constants/role";
+import { CartItemType } from "@/types/cart.type";
+import { Button } from "../ui/button";
 
-export function Navigation({ user }: { user: userType }) {
+export function Navigation({
+  user,
+  cartdata,
+}: {
+  user: userType;
+  cartdata?: CartItemType[] | [];
+}) {
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  console.log("cartData", cartdata);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -72,21 +81,17 @@ export function Navigation({ user }: { user: userType }) {
 
           {/* Cart and Menu */}
           <div className="flex gap-8 items-center">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3"onClick={()=>{route.push('/customer/checkout')}}>
               {/* Cart Button */}
-              <button
-                //   onClick={onCartClick}
-                className="relative p-2 rounded-lg hover:bg-muted transition-colors"
-                //   aria-label="Open cart"
-              >
-                <ShoppingCart className="w-6 h-6 text-foreground" />
-                {/* {itemCount > 0 && ( */}
-                <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {/* {itemCount} */}
-                  {1}
-                </span>
-                {/* )} */}
-              </button>
+              {user?.role === roles.customer && (
+                <div className="relative cursor-pointer p-2 rounded-lg hover:bg-muted transition-colors">
+                  <ShoppingCart className="w-6 h-6 text-foreground" />
+                  <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartdata ? cartdata?.length : 0}
+                  </span>
+                  {/* )} */}
+                </div>
+              )}
 
               {/* Mobile Menu Button */}
             </div>

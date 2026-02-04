@@ -39,5 +39,13 @@ export interface CartItemType {
       createdAt: string; // ISO date
       updatedAt: string; // ISO date
     };
+    
+  }
+
+  export interface editCartType {
+    id:string;
+    userId: string;
+    mealId: string;
+    quantity: number;
   }
   

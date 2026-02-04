@@ -2,7 +2,9 @@ import { getCart } from "@/actions/cart.action";
 import { getUser } from "@/actions/user.action";
 import CartItem from "@/components/modules/dashboard/customer/cart-management/cartItem";
 import CustomerInfo from "@/components/modules/dashboard/customer/cart-management/customerInfo";
+import OrderSummary from "@/components/modules/dashboard/customer/cart-management/orderSummary";
 import { Card } from "@/components/ui/card";
+import { mealTableType } from "@/types";
 import {CartItemType } from "@/types/cart.type";
 import { ArrowLeft, ArrowRight, ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +16,9 @@ const page = async () => {
   const {data:userData,error:userError}=await getUser();
   console.log("cart data", data?.data);
   console.log("userData",userData)
-  
+  const subtotal = data?.data?.reduce((sum:number, item:CartItemType) => sum + item.meal.price * item.quantity,
+    0
+  );
   return (
     <main className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 bg-card border-b border-border">
@@ -22,7 +26,7 @@ const page = async () => {
           <div className="flex items-center gap-3">
             <ShoppingCart className="h-6 w-6 text-accent" />
             <h1 className="text-xl sm:text-2xl font-bold text-foreground">
-              Checkout
+              Cart Details
             </h1>
           </div>
           <Link
@@ -78,13 +82,11 @@ const page = async () => {
             </div>
 
             {/* Order Summary Sidebar */}
-            {/* <div className="lg:col-span-1">
+            <div className="lg:col-span-1">
               <OrderSummary
                 subtotal={subtotal}
-                onCheckout={handleCheckout}
-                isLoading={isCheckingOut}
               />
-            </div> */}
+            </div>
           </div>
         )}
       </main>

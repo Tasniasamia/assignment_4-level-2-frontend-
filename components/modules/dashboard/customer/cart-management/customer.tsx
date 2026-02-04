@@ -5,7 +5,7 @@ import { ShoppingCart, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import OrderSummary from '@/components/modules/dashboard/customer/cart-management/orderSummary';
-import CartItem, { CartItemData } from '@/components/modules/dashboard/customer/cart-management/cartItem';
+// import CartItem, { CartItemData } from '@/components/modules/dashboard/customer/cart-management/cartItem';
 import CustomerInfo from '@/components/modules/dashboard/customer/cart-management/customerInfo';
 // import CartItem, { CartItemData } from '@/components/cart-item';
 // import OrderSummary from '@/components/order-summary';
@@ -45,20 +45,20 @@ const customerData = {
 };
 
 export default function CheckoutPage() {
-  const [cartItems, setCartItems] = useState<CartItemData[]>(initialCartData);
+  const [cartItems, setCartItems] = useState<any>(initialCartData);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const handleUpdateQuantity = (itemId: string, newQuantity: number) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
+  // const handleUpdateQuantity = (itemId: string, newQuantity: number) => {
+  //   setCartItems((items) =>
+  //     items.map((item) =>
+  //       item.id === itemId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+  // };
 
-  const handleRemoveItem = (itemId: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== itemId));
-  };
+  // const handleRemoveItem = (itemId: string) => {
+  //   setCartItems((items) => items.filter((item) => item.id !== itemId));
+  // };
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);
@@ -73,10 +73,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.meal.price * item.quantity,
-    0
-  );
+
 
   const isEmpty = cartItems.length === 0;
 
@@ -142,13 +139,11 @@ export default function CheckoutPage() {
             </div>
 
             {/* Order Summary Sidebar */}
-            <div className="lg:col-span-1">
+            {/* <div className="lg:col-span-1">
               <OrderSummary
                 subtotal={subtotal}
-                onCheckout={handleCheckout}
-                isLoading={isCheckingOut}
               />
-            </div>
+            </div> */}
           </div>
         )}
       </main>
