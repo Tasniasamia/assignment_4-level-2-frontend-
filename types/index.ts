@@ -8,3 +8,4 @@ export * from './meal.type';
 export * from './order.type';
 export * from './orderStatus.type';
 export * from './order.query';
+export * from './review.type'

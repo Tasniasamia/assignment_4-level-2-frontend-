@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { addCart } from '@/actions/cart.action'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface mealType{
   mealData:mealTableType,
@@ -65,9 +66,9 @@ const {push}=useRouter();
       </div>
 
       <div className="p-4 flex-1 flex flex-col">
-        <h3 className="font-bold text-foreground text-sm mb-1 line-clamp-2">
+        <Link href={`/meal/view?id=${mealData?.id}`} className="font-bold text-foreground text-sm mb-1 line-clamp-2">
           {mealData?.name}
-        </h3>
+        </Link>
         <p className="text-xs text-muted-foreground mb-2">{mealData?.provider?.ProviderProfiles?.restaurantName}</p>
         <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
           {mealData?.description}

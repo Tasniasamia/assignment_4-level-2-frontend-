@@ -62,7 +62,10 @@ const OrderTable = async ({ data }: Props) => {
               <TableCell><DeleteOrderButton id={order?.id}/></TableCell>
               <TableCell>
                 <Button className="text-white cursor-pointer">
-                  <Link href={`/customer/order-management/view?id=${order?.id}`}>View</Link>
+                  {userData?.data?.role === roles.customer && (<Link href={`/customer/order-management/view?id=${order?.id}`}>View</Link>)}
+                  {userData?.data?.role === roles.provider && (<Link href={`/provider/order-management/view?id=${order?.id}`}>View</Link>)}
+                  {userData?.data?.role === roles.admin && (<Link href={`/admin/order-management/view?id=${order?.id}`}>View</Link>)}
+
                 </Button>
               </TableCell>
             </TableRow>

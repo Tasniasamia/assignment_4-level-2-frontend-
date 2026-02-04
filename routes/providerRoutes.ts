@@ -9,6 +9,10 @@ export const providerRoutes:route= {
         url: "/provider/meal-management",
       },
       {
+        name: "Order Management",
+        url: "/provider/order-management",
+      },
+      {
         name:'History',
         url:'/dashboard/history'
       },
