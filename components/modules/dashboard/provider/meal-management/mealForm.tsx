@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -29,6 +30,7 @@ const menuItemSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
   dietaryPreferences: z.string().min(1, "dietaryPreferences is required"),
   rating: z.number(),
+  image:z.string()
 });
 
 interface MenuItemFormProps {
@@ -52,6 +54,7 @@ export function MenuItemForm({
       categoryId: "",
       dietaryPreferences: "",
       rating: 0,
+      image:''
     },
     validators: {
       onSubmit: menuItemSchema,
@@ -67,6 +70,7 @@ export function MenuItemForm({
           categoryId,
           dietaryPreferences,
           rating,
+          image
         } = value;
         const { data, error } = await addMeal({
           name: name,
@@ -77,6 +81,7 @@ export function MenuItemForm({
           categoryId: categoryId,
           dietaryPreferences: dietaryPreferences,
           rating: rating,
+          image:image
         });
         if (data?.success) {
           toast.success(data.message || "Menu Item created successfully",{ id: toatId });
@@ -275,6 +280,38 @@ export function MenuItemForm({
             )}
           />
 
+                <form.Field
+                  name="image"
+                  children={(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          Profile Image URL
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value || ""}
+                          onBlur={field.handleBlur}
+                          onChange={(e) =>
+                            field.handleChange(e?.target?.value || '')
+                          }
+                          aria-invalid={isInvalid}
+                          placeholder="https://example.com/image.jpg"
+                        />
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                        <FieldDescription>
+                          Enter the URL of your profile image
+                        </FieldDescription>
+                      </Field>
+                    );
+                  }}
+                />
+
           {/* Rating Field */}
           <form.Field
             name="rating"
@@ -308,6 +345,7 @@ export function MenuItemForm({
             }}
           />
 
+             
           <Button
             type="submit"
             form="menu-item-form"

@@ -29,7 +29,7 @@ export function Navigation({ user }: { user: userType }) {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Restaurants", href: "/restaurants" },
+    { label: "Meals", href: "/meal" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];

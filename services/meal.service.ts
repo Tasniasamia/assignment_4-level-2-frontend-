@@ -112,5 +112,28 @@ export const mealService={
       catch(error){
         return {data:null,error}
       }
-},
+  },
+
+  getAllMeal: async function (queries?: Partial<MealQueryOptions>,) {
+    try {
+      const url = new URL(`${process.env.BACKEND_URL}/api/meals`);
+      if (queries) {
+        Object.entries(queries).forEach(([key, value]) => {
+           if((value!="") && (value!=undefined) && (value!=null)){
+            url.searchParams.append(key, String(value));
+           }
+  
+          
+        });
+      }
+      const config: RequestInit = {};
+      config.next = {  tags: ["meal"] };
+      const res = await fetch(url.toString(), config);
+      const data = await res.json();
+      return { data, error: null };
+  
+    } catch (error) {
+      return { data: null, error };
+    }
+  }
 }

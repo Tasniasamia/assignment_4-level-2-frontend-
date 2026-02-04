@@ -7,6 +7,8 @@ export type MenuItemPayload = {
     categoryId: string;
     dietaryPreferences:string;
     rating: number;
+    image?:string
+
   };
   
 
@@ -78,4 +80,6 @@ export type MenuItemPayload = {
     categoryId: string;
     dietaryPreferences:string;
     rating: number;
+    image?:string
+
   };

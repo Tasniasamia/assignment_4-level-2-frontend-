@@ -77,7 +77,7 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
     }
 
   const handleClearFilters = () => {
-    router.push('/provider/meal-management');
+    router.push("?");
   }
 
   return (
