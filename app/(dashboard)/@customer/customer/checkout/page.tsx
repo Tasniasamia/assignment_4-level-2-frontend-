@@ -85,6 +85,8 @@ const page = async () => {
             <div className="lg:col-span-1">
               <OrderSummary
                 subtotal={subtotal}
+                userData={userData?.data}
+                cartData={data?.data}
               />
             </div>
           </div>
