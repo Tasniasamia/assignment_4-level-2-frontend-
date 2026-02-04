@@ -39,3 +39,24 @@ export const updateOrderStatus=async(payload:{id:string,status:orderStatus})=>{
         return {data:null,error}
     }
 }
+
+export const getOrderById=async({id}:{id:string})=>{
+    try{
+    const {data,error}=await orderService.getOrderById({id:id});
+    return {data,error}
+    }
+    catch(error){
+        return {data:null,error}
+    }
+}
+
+export const deleteOrder=async({id}:{id:string})=>{
+    try{
+    const {data,error}=await orderService.deleteOrder({id:id});
+    updateTag('order');
+    return {data,error}
+    }
+    catch(error){
+        return {data:null,error}
+    }
+}

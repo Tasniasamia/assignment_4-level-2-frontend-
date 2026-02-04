@@ -1,4 +1,5 @@
 import { orderStatus } from "./orderStatus.type";
+import { userType } from "./user";
 
 export interface CreateOrderPayload {
     userId: string;
@@ -64,7 +65,8 @@ export interface CreateOrderPayload {
           };
         };
       };
-    }[];
+    }[],
+    userdata:userType;
   };
   
 

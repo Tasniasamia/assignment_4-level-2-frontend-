@@ -76,5 +76,50 @@ export const orderService={
        } catch (error) {
          return { data: null, error };
        }
-      }
+      },
+      getOrderById:async({id}:{id:string})=>{
+        const cookieStore = await cookies();
+
+        try {
+          const res = await fetch(`${process.env.BACKEND_URL}/api/order/${id}`, {
+            method: 'GET', 
+            headers: {
+              "Content-Type": "application/json",
+              Cookie: cookieStore.toString(),
+            },
+            next: { tags: ['order'] },
+          });
+          
+        
+            const data = await res.json();
+            return { data, error: null };
+        
+          } catch (error) {
+            return { data: null, error };
+          }
+      },
+      deleteOrder:async(id:{id:string})=>{
+        
+        try{
+            const cookieStore = await cookies();
+        
+            const deleteOrderData = await fetch(`${process.env.BACKEND_URL}/api/order/${id?.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Cookie: cookieStore.toString(),
+               }
+               
+            });
+            const res=await deleteOrderData.json();
+            console.log('res',res);
+            if(res?.success){
+              return {data:res,error:null}
+            }
+            return {data:null,error:res?.error || res}
+           }
+          catch(error){
+            return {data:null,error}
+          }
+    }
 }

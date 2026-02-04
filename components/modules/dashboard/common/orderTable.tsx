@@ -10,6 +10,9 @@ import OrderStatusButton from "./orderStatusButton";
 import { OrderDetailsType } from "@/types";
 import { getUser } from "@/actions/user.action";
 import { roles } from "@/constants/role";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import DeleteOrderButton from "./deleteOrderButton";
 
 interface Props {
   data: OrderDetailsType[];
@@ -31,33 +34,37 @@ const OrderTable = async ({ data }: Props) => {
             <TableHead>Status</TableHead>
             <TableHead>Created At</TableHead>
             <TableHead>Delete</TableHead>
-
+            <TableHead>View</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {data?.map((order) => (
-            <TableRow key={order.id}>
-              <TableCell className="font-mono text-xs">{order.id}</TableCell>
-              <TableCell>{order.customerId}</TableCell>
-              <TableCell>৳ {order.totalAmount}</TableCell>
-              <TableCell>{order.paymentMethod}</TableCell>
-              <TableCell>{order.deliveryAddress}</TableCell>
+            <TableRow key={order?.id}>
+              <TableCell className="font-mono text-xs">{order?.id}</TableCell>
+              <TableCell>{order?.customerId}</TableCell>
+              <TableCell>৳ {order?.totalAmount}</TableCell>
+              <TableCell>{order?.paymentMethod}</TableCell>
+              <TableCell>{order?.deliveryAddress}</TableCell>
               <TableCell>
-                {userData?.data?.role === roles.admin ? (
+                {userData?.data?.role === roles?.admin ? (
                   order?.status
                 ) : (
                   <OrderStatusButton
-                    orderId={order.id}
-                    currentStatus={order.status as any}
+                    orderId={order?.id}
+                    currentStatus={order?.status as any}
                   />
                 )}
               </TableCell>
               <TableCell>
-                {new Date(order.createdAt).toLocaleString()}
+                {new Date(order?.createdAt).toLocaleString()}
               </TableCell>
-              <TableCell>Delete</TableCell>
-
+              <TableCell><DeleteOrderButton id={order?.id}/></TableCell>
+              <TableCell>
+                <Button className="text-white cursor-pointer">
+                  <Link href={`/customer/order-management/view?id=${order?.id}`}>View</Link>
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
