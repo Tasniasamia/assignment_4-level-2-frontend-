@@ -1,5 +1,5 @@
 "use client"
-import { deleteCategory } from '@/actions/category.action';
+import { deleteMeal } from '@/actions/meal.action';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 
 const DeleteMealButton = ({id}:{id:string}) => {
     const {push}=useRouter();
-    const handleDeleteCategory=async()=>{
-        const {data,error}=await deleteCategory({id:id});
+    const handleDelete=async()=>{
+        const {data,error}=await deleteMeal({id:id});
         if (data?.success) {
             toast.success(
-              data?.message || "Category deleted successfully"
+              data?.message || "Meal deleted successfully"
             );
             return;
           }
@@ -19,12 +19,12 @@ const DeleteMealButton = ({id}:{id:string}) => {
          toast.error(
             error?.error?.message ||
             error?.message ||
-              "Category delete failed"
+              "Meal delete failed"
           );
           return;
     }
     return (
-        <Button onClick={handleDeleteCategory} variant="destructive" className="cursor-pointer">
+        <Button onClick={handleDelete} variant="destructive" className="cursor-pointer">
         Delete
       </Button>
     );

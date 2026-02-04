@@ -1,6 +1,6 @@
 'use server'
 import { mealService } from "@/services/meal.service";
-import { MealQueryOptions, MenuItemPayload } from "@/types";
+import { EMenuItemPayload, MealQueryOptions, MenuItemPayload } from "@/types";
 import { updateTag } from "next/cache";
 
 export const addMeal=async(postData:MenuItemPayload)=>{
@@ -14,7 +14,7 @@ export const addMeal=async(postData:MenuItemPayload)=>{
     }
 }
 
-export const getMealByProvider=async( query?: Partial<MealQueryOptions>)=>{
+    export const getMealByProvider=async( query?: Partial<MealQueryOptions>)=>{
     try{
        const queries: MealQueryOptions = {
          
@@ -33,4 +33,34 @@ export const getMealByProvider=async( query?: Partial<MealQueryOptions>)=>{
       return { data: null, error };
       }}
  
- 
+    export const getMealById=async({id}:{id:string})=>{
+        try{
+        const {data,error}=await mealService.getMealById({id:id});
+        return {data,error}
+        }
+        catch(error){
+            return {data:null,error}
+        }
+    }
+
+    export const editMeal=async(postData:EMenuItemPayload)=>{
+        try{
+         const {data,error}=await mealService.editMeal(postData);
+         updateTag('meal');
+         return {data:data,error:error}
+        }
+        catch(error){
+            return {data:null,error}
+        }
+    }
+
+    
+export const deleteMeal=async({id}:{id:string})=>{
+    try{
+    const {data,error}=await mealService.deleteMeal({id:id});
+    updateTag('meal');
+    return {data,error}
+    }
+    catch(error){
+        return {data:null,error}
+    }}
