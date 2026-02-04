@@ -3,4 +3,5 @@ export * from './user';
 export * from './userStatus.type';
 export * from './route.type';
 export * from './provider.type';
-export * from './user.query.type'
+export * from './user.query.type';
+export * from './meal.type';

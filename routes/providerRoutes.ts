@@ -5,8 +5,8 @@ export const providerRoutes:route= {
    
     documents: [
       {
-        name: "Create Blog",
-        url: "/dashboard/create_blog",
+        name: "Meal Management",
+        url: "/provider/meal-management",
       },
       {
         name:'History',

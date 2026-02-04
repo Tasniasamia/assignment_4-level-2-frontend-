@@ -12,6 +12,7 @@ export const adminRoutes:route = {
         name: "Meal Category Management",
         url: "/admin/category-management",
       },
+     
       {
         name:'Setting',
         url:'/admin/setting'
