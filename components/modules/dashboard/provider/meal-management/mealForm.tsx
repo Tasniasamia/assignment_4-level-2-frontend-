@@ -18,13 +18,14 @@ import { toast } from "sonner";
 import z from "zod";
 import { useForm } from "@tanstack/react-form";
 import { addMeal } from "@/actions/meal.action";
+import { useRouter } from "next/navigation";
 
 const menuItemSchema = z.object({
   name: z.string(),
   description: z.string(),
   price: z.number().positive("Price must be greater than 0"),
   isAvailable: z.boolean(),
-  providerId: z.string().min(1, "Provider ID is required"),
+  // providerId: z.string().min(1, "Provider ID is required"),
   categoryId: z.string().min(1, "Category is required"),
   dietaryPreferences: z.string().min(1, "dietaryPreferences is required"),
   rating: z.number(),
@@ -33,21 +34,21 @@ const menuItemSchema = z.object({
 interface MenuItemFormProps {
   categories?: Array<{ id: string; name: string }>;
   providerId?: string;
-  onSuccess?: () => void;
 }
 
 export function MenuItemForm({
   categories = [],
-  providerId = "tOwKjXHglHJe5CWGF6OLiXnkGCYdXMaG",
-  onSuccess,
+  providerId ='' ,
+  
 }: MenuItemFormProps) {
+
+  const {push}=useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
       description: "",
       price: 0,
       isAvailable: true,
-      providerId: providerId,
       categoryId: "",
       dietaryPreferences: "",
       rating: 0,
@@ -63,7 +64,6 @@ export function MenuItemForm({
           description,
           price,
           isAvailable,
-          providerId,
           categoryId,
           dietaryPreferences,
           rating,
@@ -79,12 +79,13 @@ export function MenuItemForm({
           rating: rating,
         });
         if (data?.success) {
-          toast.success(data.message || "Menu Item created successfully");
+          toast.success(data.message || "Menu Item created successfully",{ id: toatId });
+          push('/provider/meal-management');
           return;
         }
 
         toast.error(
-          error?.error?.message || error?.message || "Menu Item Creation failed"
+          error?.error?.message || error?.message || "Menu Item Creation failed",{ id: toatId }
         );
         return;
       } catch (err: any) {

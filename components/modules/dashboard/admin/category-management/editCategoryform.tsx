@@ -41,7 +41,7 @@ export function EditCategoryForm(datas?: { id?: string; name?: string }) {
             console.log("data ",data)
           if (data?.success) {
             toast.success(
-              data?.message || "Category updated successfully"
+              data?.message || "Category updated successfully",{ id: toatId }
             );
             push('/admin/category-management');
             return;
@@ -50,7 +50,7 @@ export function EditCategoryForm(datas?: { id?: string; name?: string }) {
          toast.error(
             error?.error?.message ||
             error?.message ||
-              "Category update failed"
+              "Category update failed",{ id: toatId }
           );
           return;
   

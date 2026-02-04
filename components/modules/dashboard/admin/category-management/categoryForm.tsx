@@ -38,7 +38,7 @@ export function CategoryForm() {
             await addCategory({ name: name });
           if (categoryData?.success) {
             toast.success(
-              categoryData.message || "Category created successfully"
+              categoryData.message || "Category created successfully",{ id: toatId }
             );
             return;
           }
@@ -46,7 +46,7 @@ export function CategoryForm() {
          toast.error(
             categoryError?.error?.message ||
               categoryError?.message ||
-              "Category Creation failed"
+              "Category Creation failed",{ id: toatId }
           );
           return;
         

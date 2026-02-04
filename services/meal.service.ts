@@ -1,4 +1,4 @@
-import { MenuItemPayload, QueryOptions } from "@/types";
+import { MealQueryOptions, MenuItemPayload } from "@/types";
 import { cookies } from "next/headers";
 
 export const mealService={
@@ -25,7 +25,7 @@ export const mealService={
             return {data:null,error}
           }
     },
-    getMealByProvider: async function (queries?: Partial<QueryOptions>,) {
+    getMealByProvider: async function (queries?: Partial<MealQueryOptions>,) {
       try {
         const cookieStore = await cookies(); 
         const url = new URL(`${process.env.BACKEND_URL}/api/meals/provider`);
