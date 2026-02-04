@@ -25,5 +25,25 @@ export const cartService={
             return {data:null,error}
           }
     },
+    getCart: async function () {
+        try {
+          const cookieStore = await cookies(); 
+      
+      
+          const res = await fetch(
+            `${process.env.BACKEND_URL}/api/cart`,
+            {
+              headers:{Cookie:cookieStore.toString()},
+              next:{tags:['cart']}
+            }
+          );
+      
+          const data = await res.json();
+          return { data, error: null };
+      
+        } catch (error) {
+          return { data: null, error };
+        }
+      },
 
 }

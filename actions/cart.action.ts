@@ -13,3 +13,12 @@ export const addCart=async(postData:addCartType)=>{
         return {data:null,error}
     }
 }
+export const getCart=async()=>{
+    try{
+        const {data,error}=await cartService.getCart();
+        return {data:data,error:error}
+    }
+    catch (error) {
+       return { data: null, error };
+       }
+    }
