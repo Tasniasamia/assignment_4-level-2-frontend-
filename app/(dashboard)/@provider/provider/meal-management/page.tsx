@@ -15,7 +15,6 @@ const page = async ({
   const pageInt = Number(page ?? 1);
   const limitInt = Number(limit ?? 10);
   const price = priceNumber ? Number(priceNumber) : 0;
-  console.log("price ",price)
   const { data } = await getMealByProvider({
     page: pageInt,
     limit: limitInt,
@@ -25,7 +24,6 @@ const page = async ({
   });
 
   const {data:categoryData,error:categoryError}=await getAllCategory();
-  console.log("data",data)
   return (
     <div>
       <main className="min-h-screen bg-background">

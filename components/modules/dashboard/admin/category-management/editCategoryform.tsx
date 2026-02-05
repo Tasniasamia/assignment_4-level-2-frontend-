@@ -38,7 +38,6 @@ export function EditCategoryForm(datas?: { id?: string; name?: string }) {
          
           const { data, error } =
             await editCategory({ id:datas?.id as string, name: name });
-            console.log("data ",data)
           if (data?.success) {
             toast.success(
               data?.message || "Category updated successfully",{ id: toatId }

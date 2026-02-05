@@ -26,7 +26,6 @@ const page = async ({
   const pageInt = Number(page ?? 1);
   const limitInt = Number(limit ?? 10);
   const price = priceNumber ? Number(priceNumber) : 0;
-  console.log("price ", price);
   const { data } = await getAllMeal({
     page: pageInt,
     limit: limitInt,
@@ -37,7 +36,6 @@ const page = async ({
 
   const { data: categoryData, error: categoryError } = await getAllCategory();
   const {data:userData,error:userError}=await getUser();
-  console.log("data", data);
   return (
     <div>
       <Banner routeName="Meal" />

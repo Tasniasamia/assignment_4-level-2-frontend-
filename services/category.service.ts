@@ -56,7 +56,6 @@ export const categoryService={
                body: JSON.stringify(postData),
             });
             const res=await editCategoryData.json();
-            console.log('res',res);
             if(res?.success){
               return {data:res,error:null}
             }
@@ -80,7 +79,6 @@ export const categoryService={
                
             });
             const res=await editCategoryData.json();
-            console.log('res',res);
             if(res?.success){
               return {data:res,error:null}
             }

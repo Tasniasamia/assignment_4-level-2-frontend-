@@ -10,7 +10,6 @@ const page = async ({
 }) => {
   const { id } = await searchParams;
   const { data, error } = await getOrderById({ id: id });
-  console.log("order details data", data);
   return (
     <main>
       <header className="sticky top-0 z-50 bg-card border-b border-border">

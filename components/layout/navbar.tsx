@@ -30,7 +30,6 @@ export function Navigation({
 }) {
   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  console.log("cartData", cartdata);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

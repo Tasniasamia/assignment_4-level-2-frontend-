@@ -21,7 +21,6 @@ interface Props {
 }
 
 export default async function  SingleOrderDetails({ order }: Props) {
-  console.log("order", order);
   const {data,error}=await getUser();
   return (
     <div className="space-y-6 pt-6">

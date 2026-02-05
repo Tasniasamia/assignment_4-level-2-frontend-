@@ -48,27 +48,15 @@ export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState<any>(initialCartData);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // const handleUpdateQuantity = (itemId: string, newQuantity: number) => {
-  //   setCartItems((items) =>
-  //     items.map((item) =>
-  //       item.id === itemId ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-  // };
 
-  // const handleRemoveItem = (itemId: string) => {
-  //   setCartItems((items) => items.filter((item) => item.id !== itemId));
-  // };
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);
     try {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
       alert('Order placed successfully!');
       setIsCheckingOut(false);
     } catch (error) {
-      console.error('Checkout error:', error);
       setIsCheckingOut(false);
     }
   };

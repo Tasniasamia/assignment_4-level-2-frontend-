@@ -31,15 +31,13 @@ export default function ReviewSection({userId,mealId,orderId}:{userId:string,mea
       comment:comment,
     };
     const { data, error } = await addReview(newReview);
-    console.log('data component',data);
-    console.log("error component",error)
+  
       if (data?.success) {
         toast.success(data.message || "Add review successfully",{ id: toatId });
         
         return;
       }
-      console.log('error',error);
-      console.log('review',data)
+     
       toast.error(
         error?.error?.message || error?.message || 'Failed to Review',{ id: toatId }
       );

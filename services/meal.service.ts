@@ -103,7 +103,6 @@ export const mealService={
            
         });
         const res=await deleteCategoryData.json();
-        console.log('res',res);
         if(res?.success){
           return {data:res,error:null}
         }

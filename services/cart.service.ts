@@ -59,7 +59,6 @@ export const cartService={
                body: JSON.stringify(postData),
             });
             const res=await editCartData.json();
-            console.log('res',res);
             if(res?.success){
               return {data:res,error:null}
             }
@@ -83,7 +82,6 @@ export const cartService={
              
           });
           const res=await deleteCartData.json();
-          console.log('res',res);
           if(res?.success){
             return {data:res,error:null}
           }

@@ -1,11 +1,7 @@
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const page = () => {
-    return (
-        <div>
-            Customer
-        </div>
-    );
+    redirect('/customer/setting')
 };
-
 export default page;

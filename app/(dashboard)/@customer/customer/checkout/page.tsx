@@ -14,8 +14,6 @@ import React from "react";
 const page = async () => {
   const { data, error } = await getCart();
   const {data:userData,error:userError}=await getUser();
-  console.log("cart data", data?.data);
-  console.log("userData",userData)
   const subtotal = data?.data?.reduce((sum:number, item:CartItemType) => sum + item.meal.price * item.quantity,
     0
   );
