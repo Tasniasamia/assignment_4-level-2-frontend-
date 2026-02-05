@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="bg-linear-to-r from-primary to-secondary py-12 md:py-20">
+    <section className="bg-linear-to-r from-primary to-secondary py-12 md:py-20 lg:mb-40 mb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 text-balance">

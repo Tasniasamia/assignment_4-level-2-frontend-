@@ -15,7 +15,7 @@ const page = async () => {
   return (
     <div>
       <Hero />
-      <div className="min-h-screen bg-background container lg:mt-30 mt-10">
+      <div className="bg-background container lg:mb-40 mb-20 ">
         <h2 className="text-3xl font-bold text-foreground mb-8">
           Popular Meals
         </h2>

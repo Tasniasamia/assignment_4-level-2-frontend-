@@ -1,9 +1,9 @@
 export default function About() {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="lg:mb-40 mb-20 bg-gray-50">
         <div className="container">
           {/* Main About Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center lg:mb-40 mb-20">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">About FoodHub</h2>
               <p className="text-lg text-gray-600 mb-4">
@@ -22,7 +22,7 @@ export default function About() {
           </div>
   
           {/* Stats Section */}
-          <div className="bg-white rounded-lg p-8 mb-16">
+          <div className="bg-white rounded-lg p-8 lg:mb-40 mb-20">
             <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Our Impact</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="text-center">
