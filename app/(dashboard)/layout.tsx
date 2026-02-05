@@ -1,6 +1,6 @@
 
-import { AppSidebar } from "@/components/app-sidebar"
 
+import AppSidebar from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header"
 import {
   SidebarInset,
@@ -42,7 +42,7 @@ export default async function Page({admin,customer,provider}:{admin:React.ReactN
         } as React.CSSProperties
       }
     >
-            <AppSidebar   userRole={userRole} />
+            <AppSidebar variant="inset"   userRole={userRole} />
 
       <SidebarInset>
         <SiteHeader />

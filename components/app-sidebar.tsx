@@ -39,13 +39,19 @@ import { adminRoutes } from "@/routes/adminRoutes";
 import { cutsomerRoutes } from "@/routes/userRoutes";
 import { providerRoutes } from "@/routes/providerRoutes";
 import Link from "next/link";
-
-export function AppSidebar({
-  userRole,
-  ...props
-}: {
-  userRole: { role: Role } & React.ComponentProps<typeof Sidebar>;
-}) {
+type AppSidebarProps = {
+  userRole?: {
+    role: string;
+  };
+  variant?: "inset" | "default"; // 👈 add this
+};
+// export function AppSidebar({
+//   userRole,
+//   ...props
+// }: {
+//   userRole: { role: Role } & React.ComponentProps<typeof Sidebar>;
+// }) {
+  const AppSidebar = ({ userRole, variant = "default" }: AppSidebarProps) => {
   const routes =
     userRole?.role === roles.admin
       ? adminRoutes
@@ -59,7 +65,7 @@ export function AppSidebar({
     return null;
   }
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -82,3 +88,5 @@ export function AppSidebar({
     </Sidebar>
   );
 }
+
+export default AppSidebar;

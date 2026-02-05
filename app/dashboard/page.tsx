@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar"
+// import { AppSidebar } from "@/components/app-sidebar"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DataTable } from "@/components/data-table"
 import { SectionCards } from "@/components/section-cards"
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import data from "./data.json"
+import AppSidebar from "@/components/app-sidebar"
 
 export default function Page() {
   return (
@@ -20,7 +21,7 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset"  />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
