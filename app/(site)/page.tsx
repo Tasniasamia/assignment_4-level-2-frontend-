@@ -1,6 +1,8 @@
 import { getAllMeal } from "@/actions/meal.action";
 import { getUser } from "@/actions/user.action";
 import { MealCard } from "@/components/common/card/mealcard";
+import About from "@/components/common/shared/about";
+import Contact from "@/components/common/shared/contact";
 import FeatureSection from "@/components/modules/home/featureSection";
 import Hero from "@/components/modules/home/hero";
 import { mealTableType } from "@/types";
@@ -13,7 +15,7 @@ const page = async () => {
   return (
     <div>
       <Hero />
-      <main className="min-h-screen bg-background container lg:mt-30 mt-10">
+      <div className="min-h-screen bg-background container lg:mt-30 mt-10">
         <h2 className="text-3xl font-bold text-foreground mb-8">
           Popular Meals
         </h2>
@@ -22,7 +24,11 @@ const page = async () => {
             <MealCard key={meal.id} mealData={meal} userData={userData?.data} />
           ))}
         </div>
-      </main>
+        
+      </div>
+      <About/>
+      <Contact/>
+      
     </div>
   );
 };

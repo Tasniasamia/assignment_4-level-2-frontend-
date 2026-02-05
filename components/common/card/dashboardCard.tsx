@@ -25,7 +25,7 @@ const DashboardCard = ({ title, value, subtitle }: DashboardCardProps) => {
         <p className="text-sm text-slate-500 font-medium">{subtitle}</p>
       </div>
 
-      <div className="h-1 w-full bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="h-1 w-full bg-linear-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </div>
   );
 };
