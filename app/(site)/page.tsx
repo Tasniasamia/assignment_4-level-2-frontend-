@@ -3,7 +3,6 @@ import { getUser } from "@/actions/user.action";
 import { MealCard } from "@/components/common/card/mealcard";
 import About from "@/components/common/shared/about";
 import Contact from "@/components/common/shared/contact";
-import FeatureSection from "@/components/modules/home/featureSection";
 import Hero from "@/components/modules/home/hero";
 import { mealTableType } from "@/types";
 import React from "react";
