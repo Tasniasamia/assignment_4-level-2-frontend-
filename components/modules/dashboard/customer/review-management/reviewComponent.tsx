@@ -31,6 +31,8 @@ export default function ReviewSection({userId,mealId,orderId}:{userId:string,mea
       comment:comment,
     };
     const { data, error } = await addReview(newReview);
+    console.log('data component',data);
+    console.log("error component",error)
       if (data?.success) {
         toast.success(data.message || "Add review successfully",{ id: toatId });
         

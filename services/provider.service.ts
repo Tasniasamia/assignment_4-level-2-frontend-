@@ -31,6 +31,7 @@ export const providerService={
             
             body: JSON.stringify(providerData),
          });
+         
          const res=await profileUpdate.json();
          if(res?.success){
            return {data:res,error:null}
@@ -40,5 +41,31 @@ export const providerService={
        catch(error){
          return {data:null,error}
        }
-     }
+     },
+     getProviderDashboard: async () => {
+      try {
+        const cookieStore =await cookies();
+    
+        const res = await fetch(
+          `${process.env.BACKEND_URL}/api/providers/dashboard`,
+          {
+            headers:{Cookie:cookieStore.toString()},
+            next:{tags:['provider']}
+          }
+        );
+
+
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch provider dashboard");
+        }
+    
+        const data = await res.json();
+        return { data, error: null };
+    
+      } catch (error) {
+        return { data: null, error };
+      }
+    },
+    
 }

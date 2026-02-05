@@ -5,6 +5,11 @@ export const providerRoutes:route= {
    
     documents: [
       {
+        name:'Dashboard',
+        url:'/provider'
+      },
+
+      {
         name: "Meal Management",
         url: "/provider/meal-management",
       },
@@ -12,10 +17,7 @@ export const providerRoutes:route= {
         name: "Order Management",
         url: "/provider/order-management",
       },
-      {
-        name:'History',
-        url:'/dashboard/history'
-      },
+   
       {
         name: "Setting",
         url: "/provider/setting",

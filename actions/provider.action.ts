@@ -19,3 +19,13 @@ export const updateProvider=async(providerData:providerType)=>{
     return {data:data,error:error}
  }
  
+
+ export const getProviderDashboard=async()=>{
+    try{
+    const {data,error}=await providerService.getProviderDashboard();
+    return {data,error}
+    }
+    catch(error){
+        return {data:null,error}
+    }
+}
