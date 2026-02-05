@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 
 
 
-export default function ReviewSection({userId,mealId}:{userId:string,mealId:string}) {
+export default function ReviewSection({userId,mealId,orderId}:{userId:string,mealId:string,orderId:string}) {
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -24,6 +24,7 @@ export default function ReviewSection({userId,mealId}:{userId:string,mealId:stri
     try {
     if (rating === 0) return; // require at least 1 star
     const newReview: Review = {
+      orderId:orderId,
       userId: userId,
       mealId:mealId,
       rating:rating,
@@ -38,7 +39,7 @@ export default function ReviewSection({userId,mealId}:{userId:string,mealId:stri
       console.log('error',error);
       console.log('review',data)
       toast.error(
-        error?.error?.message || error?.message || "Failed to add review",{ id: toatId }
+        error?.error?.message || error?.message || 'Failed to Review',{ id: toatId }
       );
       return;
     }
@@ -75,7 +76,7 @@ export default function ReviewSection({userId,mealId}:{userId:string,mealId:stri
           </div>
 
           {/* Submit */}
-          <Button onClick={handleSubmit}>Submit Review</Button>
+          <Button className='cursor-pointer' onClick={handleSubmit}>Submit Review</Button>
         </CardContent>
       </Card>
 

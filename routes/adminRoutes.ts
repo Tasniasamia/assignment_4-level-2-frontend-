@@ -17,6 +17,10 @@ export const adminRoutes:route = {
         url: "/admin/meal-management",
       },
       {
+        name: "Order Management",
+        url: "/admin/order-management",
+      },
+      {
         name:'Setting',
         url:'/admin/setting'
       }

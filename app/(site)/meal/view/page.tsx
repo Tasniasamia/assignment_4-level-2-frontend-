@@ -135,7 +135,7 @@ const page = async ({
         </CardContent>
       </Card>
           {/* Add Review */}
-          {
+          {/* {
             (userdata?.data?.role === roles.customer) && (    <Card>
                 <CardHeader>
                   <CardTitle>Add Review</CardTitle>
@@ -146,7 +146,7 @@ const page = async ({
                 <ReviewSection userId={userdata?.data?.id} mealId={meal?.id}/>
                 </CardContent>
               </Card>)
-          }
+          } */}
       
       {/* Reviews */}
 

@@ -13,13 +13,16 @@ import { OrderDetailsType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { orderStatus } from "@/constants/orderStatus";
 import Link from "next/link";
+import { getUser } from "@/actions/user.action";
+import { roles } from "@/constants/role";
 
 interface Props {
   order: OrderDetailsType;
 }
 
-export default function SingleOrderDetails({ order }: Props) {
+export default async function  SingleOrderDetails({ order }: Props) {
   console.log("order", order);
+  const {data,error}=await getUser();
   return (
     <div className="space-y-6 pt-6">
       {/* ================= Order Summary ================= */}
@@ -74,6 +77,7 @@ export default function SingleOrderDetails({ order }: Props) {
             <p className="text-muted-foreground">Created At</p>
             <p>{new Date(order.createdAt).toLocaleString()}</p>
           </div>
+
         </CardContent>
       </Card>
 
@@ -93,7 +97,9 @@ export default function SingleOrderDetails({ order }: Props) {
                 <TableHead>Total</TableHead>
                 <TableHead>Provider</TableHead>
                 <TableHead>Restaurant</TableHead>
-              </TableRow>
+                {data?.data?.role === roles.customer && (
+                <TableHead>Add Review</TableHead>)}
+                </TableRow>
             </TableHeader>
 
             <TableBody>
@@ -149,6 +155,10 @@ export default function SingleOrderDetails({ order }: Props) {
                       </p>
                     </div>
                   </TableCell>
+                  {data?.data?.role === roles.customer && (
+                 <TableCell><Link className="text-primary underline" href={`/customer/review?orderId=${order?.id}&mealId=${item?.meal?.id}&userId=${data?.data?.id}`}>Add Review</Link></TableCell>)}
+                 
+
                 </TableRow>
               ))}
 
