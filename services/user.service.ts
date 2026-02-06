@@ -16,7 +16,7 @@ export const userService={
          body: JSON.stringify(postSignupData),
       });
       const res = await createSignup.json();
-      if (res?.user) {
+      if (res?.success) {
         return { data: res, error: null };
       }
       return { data: null, error: res };
