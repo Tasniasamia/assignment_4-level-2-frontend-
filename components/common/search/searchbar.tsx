@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react"
+import React, { useState } from "react"
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { X } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface ProductSearchBarProps {
   categories?: Array<{ id: string; name: string }>;
@@ -30,29 +30,40 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
   const currentDietaryPreference = searchParams.get("dietaryPreference") ?? "";
   const currentPrice = searchParams.get("priceNumber") ?? "0";
 
+const [category,setCategory]=useState<string|undefined>(currentCategory);
+const [dietary,setDietary]=useState<string|undefined>(currentDietaryPreference);
+const [price,setPrice]=useState<number|string|undefined>(currentPrice);
+
+
+
+
+
+
   const hasActiveFilters = useMemo(() => {
     return currentCategory || currentDietaryPreference !== "NONE" || parseInt(currentPrice) > 0;
   }, [currentCategory, currentDietaryPreference, currentPrice]);
 
   const handleCategoryChange = useCallback(
     (value: string) => {
+      setCategory(value);
       const params = new URLSearchParams(searchParams);
-      if (value) {
+      if (value.length>0) {
         params.set("category", value);
       } else {
         params.delete("category");
       }
       router.push(`?${params.toString()}`);
     },
-    [searchParams, router]
+    []
   );
 
   const handleDietaryChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
+    setDietary(value);
     const params = new URLSearchParams(searchParams);
-  
+      
     if (value && value !== "NONE") {
       params.set("dietaryPreference", value);
     } else {
@@ -66,6 +77,7 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
+      setPrice(value);
       const params = new URLSearchParams(searchParams);
       const priceNumber = value ? parseInt(value) : 0;
       if (priceNumber > 0) {
@@ -75,6 +87,38 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
       }
       router.push(`?${params.toString()}`);
     }
+
+    const handleSearch = () => {
+      const params = new URLSearchParams(searchParams.toString());
+    
+      // CATEGORY
+      if (category && category !== "all") {
+        params.set("category", category);
+      } else {
+        params.delete("category");
+      }
+    
+      // DIETARY
+      if (dietary && dietary.trim().length > 0) {
+        params.set("dietaryPreference", dietary);
+      } else {
+        params.delete("dietaryPreference");
+      }
+    
+      // PRICE
+      const priceNumber = Number(price);
+      if (!isNaN(priceNumber) && priceNumber > 0) {
+        params.set("priceNumber", priceNumber.toString());
+      } else {
+        params.delete("priceNumber");
+      }
+    
+      router.push(`?${params.toString()}`);
+    };
+    
+
+
+
 
   const handleClearFilters = () => {
     router.push("?");
@@ -89,7 +133,7 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
           {/* Category Filter */}
           <div className="space-y-3 cursor-pointer">
             <label className="text-sm font-medium pb-6">Category</label>
-            <Select value={currentCategory} onValueChange={handleCategoryChange}               
+            <Select  onValueChange={handleCategoryChange}               
             
 >
               <SelectTrigger>
@@ -113,7 +157,7 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
               type="text"
               className="cursor-pointer"
               placeholder="Enter Dietary Preference"
-              value={currentDietaryPreference || ''}
+              // value={currentDietaryPreference || ''}
               onChange={handleDietaryChange}
       
             />
@@ -126,14 +170,22 @@ export function SearchBar({ categories = [] }: ProductSearchBarProps) {
               type="number"
               className="cursor-pointer"
               placeholder="Enter max price"
-              value={currentPrice === "0" ? "" : currentPrice}
+              // value={currentPrice === "0" ? "" : currentPrice}
               onChange={handlePriceChange}
               min="0"
-              step="10"
+              step="1"
             />
           </div>
         </div>
-
+        <Button
+            onClick={handleSearch}
+            variant="outline"
+            size="sm"
+            className="w-full bg-transparent cursor-pointer"
+          >
+            <Search className="mr-2 h-4 w-4 " />
+            Search
+          </Button>
         {/* Clear Filters Button */}
         {hasActiveFilters && (
           <Button

@@ -23,6 +23,7 @@ const page = async ({
     dietaryPreferences: dietaryPreference || "",
   });
 
+  
   const {data:categoryData,error:categoryError}=await getAllCategory();
   return (
     <div>
@@ -31,7 +32,7 @@ const page = async ({
         <Button variant="destructive" className="cursor-pointer">
           <Link href="/provider/meal-management/add">Add Meal</Link>
         </Button>
-        <SearchBar categories={categoryData?.data}/>
+        <SearchBar categories={categoryData?.data} />
         <MealTable products={data?.data}/>
         <PaginationCustom meta={data?.pagination}/>
 
