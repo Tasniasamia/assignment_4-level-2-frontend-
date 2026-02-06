@@ -140,6 +140,12 @@ export function LoginForm({
             Enter your email below to login to your account
           </CardDescription>
           <div className="flex justify-center pt-3">
+          <button
+              onClick={()=>{setRole(roles.admin)}}
+              className={`w-fit  px-4 py-2 rounded-lg   cursor-pointer ${role === 'admin'?'bg-primary text-primary-foreground':'bg-white text-primary border-primary'} h-12 text-base font-semibold`}
+            >
+              Admin
+            </button>  
         <button
               onClick={()=>{setRole(roles.customer)}}
               className={`w-fit  px-4 py-2 rounded-lg   cursor-pointer ${role === 'customer'?'bg-primary text-primary-foreground':'bg-white text-primary border-primary'} h-12 text-base font-semibold`}
