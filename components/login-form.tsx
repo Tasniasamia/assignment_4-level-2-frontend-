@@ -21,6 +21,7 @@ import { Role } from "@/types";
 import { roles } from "@/constants/role";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth_client";
 
 
 export function LoginForm({
@@ -89,42 +90,30 @@ export function LoginForm({
     const toastId = toast.loading("Logging user...");
   
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // ⭐ mandatory for cookie
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      // const res = await fetch(
+      //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/sign-in/email`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     credentials: "include", // ⭐ mandatory for cookie
+      //     body: JSON.stringify({ email, password }),
+      //   }
+      // );
+  const res:any=await authClient.signIn.email({ email, password });
+  console.log("res",res);
+      // const data = await res.json();
+
   
-      const data = await res.json();
-  
-      const user = data?.data;
-  
-      if (!res.ok || !user) {
-        toast.error(data?.error?.message || data?.message || "Login failed", { id: toastId });
+      if (res?.code || res?.error) {
+        toast.error(res?.error?.message || res?.message || res?.message || "Login failed", { id: toastId });
         return;
       }
 
       toast.success("Login successfully", { id: toastId });
-  
-      switch (user.role) {
-        case 'admin':
-        window.location.href="/admin";
-        break;
-        case 'customer':
-        window.location.href="/customer";
-        break;
-        case 'provider':
-        window.location.href="/provider";
-        break;
-        default:
-        router.push("/");
-      }
+      window.location.href="/";
+      
   
     } catch (err: any) {
       toast.error(err?.message || "Something went wrong", { id: toastId });

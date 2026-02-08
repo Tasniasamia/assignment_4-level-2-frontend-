@@ -48,7 +48,12 @@ export const userService={
   
   logOut:async function(){
    const storeCookie=await cookies();
-   storeCookie.delete('better-auth.session_token');
+   await storeCookie.delete({
+    name: '__Secure-__Secure-better-auth..session_token',
+    path: '/',
+    secure: true,
+  });
+  //  storeCookie.delete('__Secure-__Secure-better-auth..session_token');
    return null
   },
   updateProfile:async function(userData:TEditUser){
