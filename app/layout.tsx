@@ -10,7 +10,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'FoodHub - Order Delicious Food Online 1',
+  title: 'FoodHub - Order Delicious Food Online',
   description: 'Fast food delivery from your favorite restaurants',
   generator: 'v0.app',
   icons: {
